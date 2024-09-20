@@ -31,3 +31,12 @@ exports.sendMessage = asyncHandler(async (req, res, next) => {
   // if conversatation exist push the new message to the conversatation
   res.status(201).json(newMessage);
 });
+exports.getMessage = asyncHandler(async (req, res, next) => {
+  const { id: userToChatId } = req.params;
+  const senderId = req.user._id;
+  const conversatation = await Conversatation.findOne({
+    perticipants: { $all: [senderId, userToChatId] },
+  }).populate("message"); // that will populate the message field with the message object get the message one by one
+  if (!conversatation) return res.status(200).json({ Messages: [] });
+  res.status(200).json(conversatation.message);
+});

@@ -40,7 +40,10 @@ exports.singup = asyncHandler(async (req, res, next) => {
 exports.login = asyncHandler(async (req, res, next) => {
   const { username, password } = req.body;
   const user = await User.findOne({ username });
-  const isPasswordCorrect = bcrypt.compare(password, user?.password || "");
+  const isPasswordCorrect = await bcrypt.compare(
+    password,
+    user?.password || ""
+  );
   if (!user || !isPasswordCorrect)
     return next(new appError("Invalid Email Or Password", 404));
   generateToken(user._id, res);
