@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.plant {
+  height: 87%;
+  bottom: -18px;
+  left: 24.5%;
+}

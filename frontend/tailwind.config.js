@@ -1,9 +1,17 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        "custom-blue": "#C0DBEA",
+      },
+    },
   },
-  plugins: [],
-}
 
+  // eslint-disable-next-line no-undef
+  plugins: [require("daisyui")],
+  daisyui: {
+    themes: ["light", "dark", "cupcake"],
+  },
+};
