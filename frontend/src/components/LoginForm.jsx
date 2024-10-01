@@ -43,7 +43,7 @@ export default function LoginForm() {
                       <span className="label-text font-bold">UserName</span>
                     </label>
                     <Field
-                      placeholder="Enter your email"
+                      placeholder="Enter your userName"
                       className="input input-bordered w-full text-black bg-white"
                       name="username"
                       type="username"
