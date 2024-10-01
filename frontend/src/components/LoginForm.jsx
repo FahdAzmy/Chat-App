@@ -1,7 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { Login } from "../api/api";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 export default function LoginForm() {
+  const [errorMessage, setErrorMessage] = useState(null); // State to handle error messages
+  const navigate = useNavigate();
   const validationSchema = Yup.object({
     username: Yup.string().required("UserName is required"),
     password: Yup.string()
@@ -9,10 +14,19 @@ export default function LoginForm() {
       .required("Password is required"),
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // Implement login logic here
+  const handleSubmit = async (values) => {
+    try {
+      const response = await Login(values);
+      setErrorMessage(null); // Clear any error messages
+      navigate("/", { replace: true });
+      console.log("Login Successful", response);
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        setErrorMessage(error.response.data.Message);
+      } else {
+        setErrorMessage("An unexpected error occurred.");
+      }
+    }
   };
 
   return (
@@ -72,6 +86,12 @@ export default function LoginForm() {
                     />
                   </div>
                 </div>
+                {/* Display error messages if any */}
+                {errorMessage && (
+                  <p className="text-black mb-4 font-bold text-md mt-4">
+                    {errorMessage}
+                  </p>
+                )}
 
                 <div>
                   <button

@@ -2,7 +2,7 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Signup, Login } from "../api/api";
+import { Signup } from "../api/api";
 import * as Yup from "yup";
 export default function SignupForm() {
   // State to hold server error messages
@@ -72,7 +72,7 @@ export default function SignupForm() {
               setSubmitting(false);
             }}
           >
-            {({ isSubmitting }) => (
+            {() => (
               <Form className="mt-8 space-y-7">
                 <div className="space-y-4 ">
                   <div className="space-y-4">
@@ -127,6 +127,7 @@ export default function SignupForm() {
                           name="gender"
                           as="select"
                         >
+                          <option value="">Select your gender</option>
                           <option value="male">Male</option>
                           <option value="female">Female</option>
                         </Field>
@@ -180,8 +181,8 @@ export default function SignupForm() {
                 </div>
                 {/* Server Error Message */}
                 {serverError && (
-                  <p className="text-white mb-4 font-bold text-md mt-4">
-                    {serverError}
+                  <p className="text-balck mb-4 font-bold text-md mt-4">
+                    {serverError}!!
                   </p>
                 )}
 

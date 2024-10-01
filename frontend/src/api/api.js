@@ -3,7 +3,7 @@ import axios from "axios";
 const API_URL = import.meta.env.VITE_APP_API_URL;
 export const Signup = async (userData) => {
   try {
-    const response = await axios.post(`${API_URL}/signup`, userData, {
+    const response = await axios.post(`${API_URL}/auth/signup`, userData, {
       withCredentials: true,
     });
     return response.data;
@@ -17,7 +17,7 @@ export const Signup = async (userData) => {
 };
 export const Login = async (userData) => {
   try {
-    const response = await axios.post(`${API_URL}/login`, userData, {
+    const response = await axios.post(`${API_URL}/auth/login`, userData, {
       withCredentials: true,
     });
     return response.data;
