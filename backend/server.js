@@ -1,6 +1,7 @@
 const express = require("express");
 require("dotenv").config();
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 const authRoute = require("./routes/authRoute");
 const messageRoute = require("./routes/messageRoute");
@@ -11,7 +12,13 @@ const connectToDB = require("./db/connectToDB");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
-
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN || "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 app.use(express.json()); // To Parsing the Data from the body
 app.use(cookieParser());
 
