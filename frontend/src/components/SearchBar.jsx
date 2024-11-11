@@ -5,7 +5,7 @@ export default function SearchBar() {
   const [search, setSearch] = useState("");
 
   return (
-    <div className=" my-4 flex justify-center">
+    <div className=" my-4 flex  justify-center">
       {/* Search bar */}
       <input
         className="w-11/12 px-3 text-white h-11 rounded-xl bg-transparent border border-slate-400 "
