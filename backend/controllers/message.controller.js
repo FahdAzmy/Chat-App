@@ -23,7 +23,6 @@ exports.sendMessage = asyncHandler(async (req, res, next) => {
     message,
   });
   if (newMessage) conversatation.message.push(newMessage._id);
-
   // Socket IO functionalty will be here
 
   // this different way to save data in parallel
@@ -37,6 +36,7 @@ exports.getMessage = asyncHandler(async (req, res, next) => {
   const conversatation = await Conversatation.findOne({
     perticipants: { $all: [senderId, userToChatId] },
   }).populate("message"); // that will populate the message field with the message object get the message one by one
-  if (!conversatation) return res.status(200).json({ Messages: [] });
-  res.status(200).json(conversatation.message);
+  if (!conversatation) return res.status(200).json([]);
+  const messages = conversatation.message;
+  res.status(200).json(messages);
 });

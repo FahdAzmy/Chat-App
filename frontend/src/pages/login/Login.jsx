@@ -1,5 +1,5 @@
-import LeftImgs from "../../components/LeftImgs";
-import LoginForm from "../../components/LoginForm";
+import LeftImgs from "../../components/SideBar/LeftImgs";
+import LoginForm from "../../components/forms/LoginForm";
 
 const Login = () => {
   return (

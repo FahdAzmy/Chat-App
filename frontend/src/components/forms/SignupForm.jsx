@@ -1,9 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Signup } from "../api/api";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import { Signup } from "../../api/api";
 export default function SignupForm() {
   // State to hold server error messages
   const [serverError, setServerError] = useState(null);
@@ -59,7 +59,7 @@ export default function SignupForm() {
           </div>
           <Formik
             initialValues={{
-              userName: "",
+              username: "",
               password: "",
               fullname: "",
               confirmPassword: "",
@@ -204,13 +204,13 @@ export default function SignupForm() {
             )}
           </Formik>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Don't have an account?{" "}
-            <a
-              href="#"
+            Do you have an account?{" "}
+            <Link
+              to={"/login"}
               className="font-medium text-indigo-600 hover:text-indigo-500"
             >
-              Sign up for free
-            </a>
+              Login
+            </Link>
           </p>
         </div>
       </div>

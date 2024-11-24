@@ -1,5 +1,5 @@
-import LeftImgs from "../../components/LeftImgs";
-import SignupForm from "../../components/SignupForm.jsx";
+import LeftImgs from "../../components/SideBar/LeftImgs";
+import SignupForm from "../../components/forms/SignupForm";
 export default function Signup() {
   return (
     <div>

@@ -1,19 +1,31 @@
+/* eslint-disable react/prop-types */
+import { useContext } from "react";
+import useConversation from "../../zustand/userConverstaions";
+import { AuthContext } from "../../context/AuthContext";
+import { extractTime } from "../../utils/extractTime";
+
 export default function Message({ message }) {
+  const { selectedConversation } = useConversation();
+  const { userData } = useContext(AuthContext);
+  const formattedTime = extractTime(message.createdAt);
+  const fromMe = message.senderId === userData._id;
+  const chatClassName = fromMe ? "chat-start" : "chat-end";
+  const profilePic = fromMe
+    ? userData.profilePic
+    : selectedConversation?.profilePic;
+  const messageColor = fromMe ? "bg-blue-600" : "bg-gray-700";
   return (
-    <div className="chat chat-start">
+    <div className={`chat ${chatClassName}`}>
       <div className="chat-image avatar">
         <div className="w-10 rounded-full">
-          <img
-            alt="Avatar"
-            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-          />
+          <img alt="Avatar" src={`${profilePic}`} />
         </div>
       </div>
       <div className="chat-header">
-        Obi-Wan Kenobi
-        <time className="text-xs opacity-50">12:45</time>
+        {selectedConversation.fullname}{" "}
+        <time className="text-xs opacity-50">{formattedTime}</time>
       </div>
-      <div className="chat-bubble">{message}</div>
+      <div className={`chat-bubble ${messageColor}`}>{message.message}</div>
       <div className="chat-footer opacity-50">Delivered</div>
     </div>
   );

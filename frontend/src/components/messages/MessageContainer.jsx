@@ -1,12 +1,18 @@
 import InputMessage from "./InputMessage";
 import Messages from "./Messages";
-import HeadChat from "../HeadChat";
+import HeadChat from "../chat/HeadChat";
 import { BsChatDots } from "react-icons/bs";
+import useConversation from "../../zustand/userConverstaions";
+import { useEffect } from "react";
 export default function MessageContainer() {
-  const noChatSelected = false;
+  const { selectedConversation, setSelectedConversation } = useConversation();
+  useEffect(() => {
+    //clean up (unmounts )
+    return () => setSelectedConversation(null);
+  }, []);
   return (
     <div className="h-full flex flex-col">
-      {noChatSelected ? (
+      {!selectedConversation ? (
         <NoChatSelected />
       ) : (
         <>

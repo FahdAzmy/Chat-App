@@ -1,12 +1,15 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { Login } from "../api/api";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { Login } from "../../api/api";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
 export default function LoginForm() {
   const [errorMessage, setErrorMessage] = useState(null); // State to handle error messages
   const navigate = useNavigate();
+  const { setIsLoggedIn } = useContext(AuthContext);
+
   const validationSchema = Yup.object({
     username: Yup.string().required("UserName is required"),
     password: Yup.string()
@@ -16,10 +19,10 @@ export default function LoginForm() {
 
   const handleSubmit = async (values) => {
     try {
-      const response = await Login(values);
+      await Login(values);
       setErrorMessage(null); // Clear any error messages
       navigate("/", { replace: true });
-      console.log("Login Successful", response);
+      setIsLoggedIn(true);
     } catch (error) {
       if (error.response && error.response.status === 404) {
         setErrorMessage(error.response.data.Message);
@@ -43,7 +46,7 @@ export default function LoginForm() {
             </p>
           </div>
           <Formik
-            initialValues={{ userName: "", password: "" }}
+            initialValues={{ username: "fahd66", password: "011401" }}
             validationSchema={validationSchema}
             onSubmit={(values) => {
               handleSubmit(values);
@@ -106,12 +109,12 @@ export default function LoginForm() {
           </Formik>
           <p className="mt-2 text-center text-sm text-gray-600">
             Don't have an account?{" "}
-            <a
-              href="#"
+            <Link
+              to={"/signup"}
               className="font-medium text-indigo-600 hover:text-indigo-500"
             >
               Sign up for free
-            </a>
+            </Link>
           </p>
         </div>
       </div>

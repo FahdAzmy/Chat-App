@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useContext } from "react";
 import { MessageCircle } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+import Cookies from "js-cookie";
 
 const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const handleLogout = () => {
+    Cookies.remove("token");
+    setIsLoggedIn(false);
+    navigate("/login");
+  };
   return (
     <nav className="bg-white p-4 shadow-md">
       <div className="max-lg:max-w-5xl px-3 mx-auto">
@@ -20,7 +28,10 @@ const Navbar = () => {
           {/* Auth Buttons - Always visible */}
           <div className="flex items-center space-x-3">
             {isLoggedIn ? (
-              <button className="px-4 py-2 font-bold bg-red-500 hover:bg-red-600 text-white rounded-md transition-colors">
+              <button
+                className="px-4 py-2 font-bold bg-red-500 hover:bg-red-600 text-white rounded-md transition-colors"
+                onClick={() => handleLogout()}
+              >
                 Logout
               </button>
             ) : (
