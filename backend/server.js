@@ -9,8 +9,8 @@ const userRoute = require("./routes/userRoute");
 const { GlobalErrorHandler } = require("./middleware/errorHandling");
 
 const connectToDB = require("./db/connectToDB");
+const { app, server } = require("./socket/socket");
 
-const app = express();
 const PORT = process.env.PORT || 4000;
 app.use(
   cors({
@@ -26,7 +26,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRoute);
 app.use("/api/messages", messageRoute);
 app.use("/api/users", userRoute);
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   connectToDB();
   console.log("Server Listening on Port", PORT);
 });

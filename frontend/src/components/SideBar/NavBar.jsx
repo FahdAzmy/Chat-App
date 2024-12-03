@@ -7,10 +7,11 @@ import Cookies from "js-cookie";
 const Navbar = () => {
   const navigate = useNavigate();
 
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, setIsLoggedIn, setUserData } = useContext(AuthContext);
   const handleLogout = () => {
     Cookies.remove("token");
     setIsLoggedIn(false);
+    setUserData(null);
     navigate("/login");
   };
   return (

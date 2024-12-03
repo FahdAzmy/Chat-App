@@ -1,8 +1,11 @@
 /* eslint-disable react/prop-types */
+import { useSocketContext } from "../../context/SocketContext";
 import useConversation from "../../zustand/userConverstaions";
 export default function Frined({ name, username, profilePic, conversation }) {
   const { selectedConversation, setSelectedConversation } = useConversation();
   const isSelected = selectedConversation?._id === conversation._id;
+  const { onlineUsers } = useSocketContext();
+  const isOnline = onlineUsers.includes(conversation._id);
   return (
     <div
       className={` last:border-b-0 first:pt-0  border-b p-2  hover:bg-slate-800  cursor-pointer  border-gray-500 ${
@@ -11,7 +14,7 @@ export default function Frined({ name, username, profilePic, conversation }) {
       onClick={() => setSelectedConversation(conversation)}
     >
       <div className="flex gap-2">
-        <div className="avatar online">
+        <div className={`avatar ${isOnline ? "online" : "offline"}`}>
           <div className=" w-14 rounded-full">
             <img src={profilePic} />
           </div>

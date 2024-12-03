@@ -6,7 +6,9 @@ import { extractTime } from "../../utils/extractTime";
 
 export default function Message({ message }) {
   const { selectedConversation } = useConversation();
+
   const { userData } = useContext(AuthContext);
+  console.log(selectedConversation);
   const formattedTime = extractTime(message.createdAt);
   const fromMe = message.senderId === userData._id;
   const chatClassName = fromMe ? "chat-start" : "chat-end";
@@ -22,7 +24,7 @@ export default function Message({ message }) {
         </div>
       </div>
       <div className="chat-header">
-        {selectedConversation.fullname}{" "}
+        {fromMe ? userData.fullname : selectedConversation.fullname}{" "}
         <time className="text-xs opacity-50">{formattedTime}</time>
       </div>
       <div className={`chat-bubble ${messageColor}`}>{message.message}</div>

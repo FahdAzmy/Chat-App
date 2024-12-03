@@ -1,8 +1,9 @@
 import SearchBar from "../../components/SideBar/SearchBar";
 import MessageContainer from "../../components/messages/MessageContainer";
 import Conversations from "../../components/chat/Conversations";
+import withGuard from "../../utils/WithGuars";
 
-export default function Home() {
+function Home() {
   return (
     <div className="flex h-screen ">
       {/* Left sidebar */}
@@ -22,3 +23,4 @@ export default function Home() {
     </div>
   );
 }
+export default withGuard(Home);

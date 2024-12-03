@@ -1,7 +1,7 @@
 const asyncHandler = require("../middleware/asyncHnalder");
-const appError = require("../utils/AppError");
 const Conversatation = require("../models/converstion.model");
 const Message = require("../models/message.model");
+const { getReceiverSocketId, io } = require("../socket/socket");
 exports.sendMessage = asyncHandler(async (req, res, next) => {
   const { message } = req.body;
   const { id: reciverId } = req.params; // get Reciver Id from from params
@@ -23,10 +23,14 @@ exports.sendMessage = asyncHandler(async (req, res, next) => {
     message,
   });
   if (newMessage) conversatation.message.push(newMessage._id);
-  // Socket IO functionalty will be here
-
   // this different way to save data in parallel
   await Promise.all([conversatation.save(), newMessage.save()]);
+  // Socket IO functionalty will be here
+  const receiverSocketId = getReceiverSocketId(reciverId);
+  if (receiverSocketId) {
+    //io.to(socketid).emit()used to send event to specific client
+    io.to(receiverSocketId).emit("newMessage", newMessage);
+  }
   // if conversatation exist push the new message to the conversatation
   res.status(201).json(newMessage);
 });
